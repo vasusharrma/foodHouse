@@ -1,0 +1,25 @@
+{
+  "name": "foodhouse",
+  "version": "1.0.0",
+  "description": "food app",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vasusharrma/foodHouse.git"
+  },
+  "keywords": [
+    "react",
+    "foodHouse",
+    "food",
+    "react",
+    "project"
+  ],
+  "author": "vasu bhardwaj jaiswal",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  }
+}
