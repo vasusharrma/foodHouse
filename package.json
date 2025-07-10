@@ -2,24 +2,27 @@
   "name": "foodhouse",
   "version": "1.0.0",
   "description": "food app",
-  "main": "App.js",
   "scripts": {
+    "build": "parcel build index.html",
+    "start": "parcel index.html",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vasusharrma/foodHouse.git"
-  },
-  "keywords": [
-    "react",
-    "foodHouse",
-    "food",
-    "react",
-    "project"
-  ],
-  "author": "vasu bhardwaj jaiswal",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
+    "buffer": "^6.0.3",
     "parcel": "^2.15.4"
-  }
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "axios": "^1.10.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "tailwindcss": "^4.1.11"
+  },
+  "browsersList": [
+    "last 2 versions"
+  ]
 }
