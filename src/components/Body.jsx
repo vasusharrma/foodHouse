@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer.jsx";
 import Restaurants from "./Restaurants.jsx";
 
 const Body = () => {
@@ -19,6 +20,7 @@ const Body = () => {
       }&offset=0&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING `,
     );
     const fetchedDataJson = await fetchedData.json();
+
     const arr = fetchedDataJson?.data?.cards[1]?.card?.card?.gridElements
       ?.infoWithStyle
       ?.restaurants;
@@ -30,22 +32,20 @@ const Body = () => {
   };
 
   function topRated() {
-    console.log("newletters");
     if (filtered) {
       setCards([...defaultCards]);
-      setButtonText("All Resta");
       setFiltered(false);
+      setButtonText("Top Rated");
     } else {
       const tempCards = cards.filter((card) => card.info.avgRatingString > 4.2);
       setCards([...tempCards]);
-      setButtonText("Top Rated");
+      setButtonText("All Resta");
       setFiltered(true);
     }
   }
   useEffect(() => {
     fetchCards();
   }, []);
-
   return (
     <div className="w-[90%] md:w-[80%] xl:w-[70%] mx-auto">
       <div className="flex">
@@ -58,15 +58,16 @@ const Body = () => {
         </button>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] place-items-center">
-        {cards.map((card, index) => (
-          <Restaurants
-            key={index}
-            info={card.info}
-          />
-        ))}
+        {cards.length
+          ? (cards.map((card, index) => (
+            <Restaurants
+              key={index}
+              info={card.info}
+            />
+          )))
+          : <Shimmer />}
       </div>
     </div>
   );
 };
-
 export default Body;
