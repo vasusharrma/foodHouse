@@ -7,7 +7,8 @@ const Body = () => {
   const [defaultCards, setDefaultCards] = useState([]);
   const [isSearchOn, setIsSearchOn] = useState(false);
   const [buttonText, setButtonText] = useState("Top Rated");
-  const [currCity, setCurrCity] = useState([
+  const [cityToFind, setCityToFind] = useState("");
+  const [currCityCoords, setCurrCityCoords] = useState([
     30.015538499999998,
     77.60388038805745,
   ]);
@@ -17,9 +18,11 @@ const Body = () => {
 
   const fetchCards = async () => {
     const fetchedData = await fetch(
-      `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${currCity[0]}&lng=${
-        currCity[1]
-      }&offset=0&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING `,
+      `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${
+        currCityCoords[0]
+      }&lng=${
+        currCityCoords[1]
+      }&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`,
     );
     const fetchedDataJson = await fetchedData.json();
 
@@ -38,7 +41,7 @@ const Body = () => {
     const pushedId = new Set();
     const filterCards = [];
 
-    for (card of arr) {
+    for (let card of arr) {
       if (!pushedId.has(card.info.id)) {
         pushedId.add(card.info.id);
         filterCards.push(card);
@@ -48,6 +51,28 @@ const Body = () => {
     if (arr) {
       setCards([...filterCards]);
       setDefaultCards([...filterCards]);
+    }
+  };
+
+  const fetchCityCord = async () => {
+    if (cityToFind === "") {
+      return;
+    }
+
+    const data = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${cityToFind}`,
+    );
+
+    const response = await data.json();
+    let tempCoord = [];
+    tempCoord = [
+      response[0]?.lat,
+      response[0]?.lon,
+    ];
+
+    console.log("coords : ", tempCoord);
+    if (tempCoord.length) {
+      setCurrCityCoords(tempCoord);
     }
   };
 
@@ -74,8 +99,9 @@ const Body = () => {
     }
   }
   useEffect(() => {
+    setCards([]);
     fetchCards();
-  }, []);
+  }, [currCityCoords]);
   return (isSearchOn && (cards.length === 0))
     ? (
       <div className="flex flex-col items-center justify-around gap-5">
@@ -105,6 +131,24 @@ const Body = () => {
           >
             {buttonText}
           </button>
+          <div className="flex justify-center items-center gap-4">
+            <input
+              type="text"
+              placeholder="enter a city.."
+              className="h-6 border-b outline-none focus:outline:none  p-3 text-lg "
+              onChange={(e) => {
+                setCityToFind(e.target.value);
+              }}
+              value={cityToFind}
+            />
+            <button
+              type="button"
+              onClick={fetchCityCord}
+              className="bg-[#ED3500] text-white px-3 py-2  font-bold cursor-pointer"
+            >
+              Search
+            </button>
+          </div>
 
           <div className="flex justify-center items-center gap-4">
             <input

@@ -1,7 +1,7 @@
 import ShimmerCards from "./ShimmerCards.jsx";
 
 const Shimmer = () => {
-  const arr = new Array(12).fill(0);
+  const arr = new Array(30).fill(0);
   console.log("arr: ", arr);
   return (
     <>
