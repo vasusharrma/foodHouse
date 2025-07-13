@@ -33,10 +33,21 @@ const Body = () => {
       }
     }
 
+    // filter out duplicates res
+
+    const pushedId = new Set();
+    const filterCards = [];
+
+    for (card of arr) {
+      if (!pushedId.has(card.info.id)) {
+        pushedId.add(card.info.id);
+        filterCards.push(card);
+      }
+    }
+
     if (arr) {
-      const newCards = new Set([...cards, ...arr]);
-      setCards([...newCards]);
-      setDefaultCards([...newCards]);
+      setCards([...filterCards]);
+      setDefaultCards([...filterCards]);
     }
   };
 
