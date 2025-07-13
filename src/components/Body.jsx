@@ -41,8 +41,8 @@ const Body = () => {
   };
 
   function searchResFun() {
-    const filterCards = cards.filter((card) =>
-      card.info.name.includes(searchRes)
+    const filterCards = defaultCards.filter((card) =>
+      card.info.name.toLowerCase().includes(searchRes.toLowerCase())
     );
 
     setIsSearchOn(true);
